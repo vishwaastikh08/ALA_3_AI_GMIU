@@ -4,9 +4,11 @@ import difflib
 
 app = Flask(__name__)
 
+# Load QnA data
 with open("static/qna.json", "r", encoding="utf-8") as f:
     qna = json.load(f)
 
+# Predefined greeting responses
 greetings = {
     "hi": "Hello 👋! I’m your Current Affairs Bot.",
     "hello": "Hi there! Ask me anything about current events.",
@@ -24,7 +26,7 @@ def home():
 def ask():
     user_question = request.json.get("question", "").lower().strip()
 
-    # Normalize contractions and short forms
+    # Normalize contractions and common abbreviations
     replacements = {
         "who's": "who is",
         "pm": "prime minister",
@@ -34,12 +36,12 @@ def ask():
     for k, v in replacements.items():
         user_question = user_question.replace(k, v)
 
-    # Check greetings
+    # Check for greetings
     for key, reply in greetings.items():
         if user_question.startswith(key):
             return jsonify({"answer": reply})
 
-    # Fuzzy matching for QnA
+    # Fuzzy matching against questions in the QnA
     questions = [qa["question"].lower() for qa in qna]
     match = difflib.get_close_matches(user_question, questions, n=1, cutoff=0.4)
 
@@ -48,7 +50,10 @@ def ask():
             if qa["question"].lower() == match[0]:
                 return jsonify({"answer": qa["answer"]})
 
-    return jsonify({"answer": "Hmm 🤔 I don’t know that one yet. Try asking about recent events like the budget, elections, or world news."})
+    # Default fallback response
+    return jsonify({
+        "answer": "Hmm 🤔 I don’t know that one yet. Try asking about recent events like the budget, elections, or world news."
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
