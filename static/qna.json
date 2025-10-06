@@ -7,7 +7,6 @@
     "question": "When was the 2025 Union Budget of India presented?",
     "answer": "The 2025 Union Budget was presented on 1 February 2025. :contentReference[oaicite:0]{index=0}"
   },
-  
   {
     "question": "What is the fiscal deficit target in the 2025 Union Budget?",
     "answer": "The fiscal deficit in the 2025 Union Budget is targeted at 4.4% of GDP. :contentReference[oaicite:1]{index=1}"
@@ -157,7 +156,7 @@
     "answer": "India’s score in the Global Hunger Index worsened in 2021 after several years of improvement. :contentReference[oaicite:37]{index=37}"
   },
   {
-    "question": "Which major policy was highlighted in India’s 2024 free-dom in world report?",
+    "question": "Which major policy was highlighted in India’s 2024 freedom in world report?",
     "answer": "India in the 2024 Freedom in the World report was rated 'Partly Free'. :contentReference[oaicite:38]{index=38}"
   },
   {
@@ -179,11 +178,9 @@
   {
     "question": "Which credit rating outlook was assigned along with the affirmation by Moody’s in 2025?",
     "answer": "Moody’s affirmed Baa3 with a **stable** outlook. :contentReference[oaicite:43]{index=43}"
-  }
+  },
   {
-    "question": "When won the 2023 cricket world cup?",
-    "answer": "Australia won the 2023 world cup. :contentReference[oaicite:44]{index=44}"
+    "question": "Who won the 2023 Cricket World Cup?",
+    "answer": "Australia won the 2023 World Cup against India by six wickets at Narendra Modi Stadium, Ahmedabad. :contentReference[oaicite:44]{index=44}"
   }
 ]
-
-
