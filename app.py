@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 import json
 import difflib
+import string
+import re
 
 app = Flask(__name__)
 
@@ -8,7 +10,7 @@ app = Flask(__name__)
 with open("static/qna.json", "r", encoding="utf-8") as f:
     qna = json.load(f)
 
-# Predefined greeting responses
+# Greeting responses
 greetings = {
     "hi": "Hello 👋! I’m your Current Affairs Bot.",
     "hello": "Hi there! Ask me anything about current events.",
@@ -18,15 +20,10 @@ greetings = {
     "thanks": "You're welcome 🙌. Feel free to ask more!"
 }
 
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-@app.route("/ask", methods=["POST"])
-def ask():
-    user_question = request.json.get("question", "").lower().strip()
-
-    # Normalize contractions and common abbreviations
+# Normalize text: lowercase, remove punctuation, handle abbreviations
+def normalize(text):
+    text = text.lower().strip()
+    text = text.translate(str.maketrans("", "", string.punctuation))
     replacements = {
         "who's": "who is",
         "pm": "prime minister",
@@ -34,23 +31,37 @@ def ask():
         "govt": "government"
     }
     for k, v in replacements.items():
-        user_question = user_question.replace(k, v)
+        text = text.replace(k, v)
+    return text
+
+# Remove :contentReference[...] from answers
+def clean_answer(answer):
+    return re.sub(r":contentReference\[.*?\]{index=\d+}", "", answer).strip()
+
+@app.route("/")
+def home():
+    return render_template("index.html")
+
+@app.route("/ask", methods=["POST"])
+def ask():
+    user_question = normalize(request.json.get("question", ""))
 
     # Check for greetings
     for key, reply in greetings.items():
         if user_question.startswith(key):
             return jsonify({"answer": reply})
 
-    # Fuzzy matching against questions in the QnA
-    questions = [qa["question"].lower() for qa in qna]
+    # Match against stored questions
+    questions = [normalize(qa["question"]) for qa in qna]
     match = difflib.get_close_matches(user_question, questions, n=1, cutoff=0.4)
 
     if match:
         for qa in qna:
-            if qa["question"].lower() == match[0]:
-                return jsonify({"answer": qa["answer"]})
+            if normalize(qa["question"]) == match[0]:
+                cleaned = clean_answer(qa["answer"])
+                return jsonify({"answer": cleaned})
 
-    # Default fallback response
+    # Default fallback
     return jsonify({
         "answer": "Hmm 🤔 I don’t know that one yet. Try asking about recent events like the budget, elections, or world news."
     })
