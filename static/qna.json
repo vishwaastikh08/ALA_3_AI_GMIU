@@ -7,10 +7,7 @@
     "question": "When was the 2025 Union Budget of India presented?",
     "answer": "The 2025 Union Budget was presented on 1 February 2025. :contentReference[oaicite:0]{index=0}"
   },
-   {
-    "question": "When won the 2023 cricket world cup?",
-    "answer": "Australia won the 2023 world cup. :contentReference[oaicite:0]{index=0}"
-  },
+  
   {
     "question": "What is the fiscal deficit target in the 2025 Union Budget?",
     "answer": "The fiscal deficit in the 2025 Union Budget is targeted at 4.4% of GDP. :contentReference[oaicite:1]{index=1}"
@@ -183,5 +180,10 @@
     "question": "Which credit rating outlook was assigned along with the affirmation by Moody’s in 2025?",
     "answer": "Moody’s affirmed Baa3 with a **stable** outlook. :contentReference[oaicite:43]{index=43}"
   }
+  {
+    "question": "When won the 2023 cricket world cup?",
+    "answer": "Australia won the 2023 world cup. :contentReference[oaicite:44]{index=44}"
+  }
 ]
+
 
